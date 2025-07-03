@@ -1,0 +1,7 @@
+{
+    "require": {
+        "php": ">=8.3",
+        "symfony/console": "^7.3",
+        "g2a/integration-api-client": "^1.0"
+    }
+}
