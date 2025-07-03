@@ -64,8 +64,8 @@ class BuyCommand extends Command
             [$productId, $qty] = $this->resolveOptions($input);
 
             $orderIds = $g2aProductBuyer->createOrders($apiClient, $output, $productId, $qty);
-            $g2aProductBuyer->payForOrders($apiClient, $output, $orderIds);
-            $keys = $g2aProductBuyer->getKeysFromOrders($apiClient, $output, $orderIds);
+            $paidOrderIds = $g2aProductBuyer->payForOrders($apiClient, $output, $orderIds);
+            $keys = $g2aProductBuyer->getKeysFromOrders($apiClient, $output, $paidOrderIds);
 
             $this->showOutput($keys, $output);
             return Command::SUCCESS;
