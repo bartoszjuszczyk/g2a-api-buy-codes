@@ -20,13 +20,14 @@ PHP 8.3 or higher
 ### Composer
 
 #### Installation
+
 1. Clone the repository:
-```
+```bash
 git clone https://github.com/bartoszjuszczyk/g2a-api-buy-codes.git
 cd g2a-api-buy-codes
 ```
 2. Install the required dependencies using Composer:
-```
+```bash
 composer install
 ```
 This will install symfony/console and the G2A API client library, among other dependencies.
@@ -34,8 +35,21 @@ This will install symfony/console and the G2A API client library, among other de
 ## Usage
 The application is executed through the cmd.php script. The main command is buy, which accepts several options to specify what you want to purchase.
 
+### Configuration
+1.  Create a file named `.env` in the root directory of the project. A good way to start is by copying the example file:
+    ```bash
+    cp .env.example .env
+    ```
+2.  Open the `.env` file and fill in your G2A API credentials. The application will not run without them.
+
+    ```dotenv
+    API_EMAIL="your-g2a-api-email@example.com"
+    API_DOMAIN="sandboxapi.g2a.com"
+    API_HASH="your_api_hash"
+    API_CUSTOMER_SECRET="your_api_customer_secret"
+    ```
 ### Command
-```
+```bash
 php cmd.php buy [options]
 ```
 ### Options
@@ -49,15 +63,15 @@ php cmd.php buy [options]
 ### Example
 To buy 5 keys for the product with ID 12345:
 
-```
+```bash
 php cmd.php buy --product=12345 --qty=5
 ```
 Or using the shortcut for the product ID:
-```
+```bash
 php cmd.php buy -p 12345 --qty=5
 ```
 If the purchase is successful, the command will output the five product keys, each on a new line.
-```
+```bash
 FAKEKEY-ABCDE-11111
 FAKEKEY-FGHIJ-22222
 FAKEKEY-KLMNO-33333

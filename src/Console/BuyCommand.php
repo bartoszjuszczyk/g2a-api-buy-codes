@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Juszczyk\Console;
 
 use G2A\IntegrationApi\Client;
+use G2A\IntegrationApi\Exception\Model\InvalidConfigException;
 use G2A\IntegrationApi\Model\Config;
 use Juszczyk\Api\G2AProductBuyer;
 use Symfony\Component\Console\Command\Command;
@@ -23,10 +24,6 @@ class BuyCommand extends Command
     private const string PRODUCT_OPTION = 'product';
     private const string INVENTORY_OPTION = 'inventory';
     private const string QTY_OPTION = 'qty';
-    private const string API_EMAIL = 'sandboxapitest@g2a.com';
-    private const string API_DOMAIN = 'sandboxapi.g2a.com';
-    private const string API_HASH = 'qdaiciDiyMaTjxMt';
-    private const string API_CUSTOMER_SECRET = 'b0d293f6-e1d2-4629-8264-fd63b5af3207b0d293f6-e1d2-4629-8264-fd63b5af3207';
 
     /**
      * @inheritDoc
@@ -80,14 +77,15 @@ class BuyCommand extends Command
 
     /**
      * @return Client
+     * @throws InvalidConfigException
      */
     private function createApiClient(): Client
     {
         $config = new Config(
-            self::API_EMAIL,
-            self::API_DOMAIN,
-            self::API_HASH,
-            self::API_CUSTOMER_SECRET
+            $_ENV['API_EMAIL'],
+            $_ENV['API_DOMAIN'],
+            $_ENV['API_HASH'],
+            $_ENV['API_CUSTOMER_SECRET']
         );
 
         return new Client($config);
