@@ -56,8 +56,8 @@ php cmd.php buy [options]
 | Option      | Shortcut | Description                               | Required   | Default |
 |-------------|----------|-------------------------------------------|------------|---------|
 | --product   | -p       | The ID of the product to buy.             | yes        | ------- |
-| --inventory | -i       | The quantity of the product to buy.       | no         | g2a     |
-| --qty       | -------- | The G2A inventory to use.                 | no         | 1       |
+| --inventory | -i       | The G2A inventory to use.                 | no         | g2a     |
+| --qty       | -------- | The quantity of the product to buy.       | no         | 1       |
 
 
 ### Example
