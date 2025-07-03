@@ -17,6 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class G2AProductBuyer
 {
+    private const int WAIT_FOR_PAYMENT_PROCESS_TIME_MICROSECONDS = 700000;
     /**
      * @param Client $apiClient
      * @param OutputInterface $output
@@ -58,14 +59,17 @@ class G2AProductBuyer
      * @param Client $apiClient
      * @param OutputInterface $output
      * @param array $orderIds
-     * @return void
+     * @return array
      */
-    public function payForOrders(Client $apiClient, OutputInterface $output, array $orderIds): void
+    public function payForOrders(Client $apiClient, OutputInterface $output, array $orderIds): array
     {
+        $paidOrderIds = [];
         foreach ($orderIds as $orderId) {
             $request = new OrderPaymentRequest($apiClient);
             try {
                 $request->setOrderId($orderId)->call();
+                $paidOrderIds[] = $orderId;
+                usleep(self::WAIT_FOR_PAYMENT_PROCESS_TIME_MICROSECONDS);
             } catch (\Throwable $e) {
                 if ($request->getResponse() && $request->getResponse()->getStatus() !== '200') {
                     $message = sprintf(
@@ -83,6 +87,7 @@ class G2AProductBuyer
                 $this->handleException($output, $message);
             }
         }
+        return $paidOrderIds;
     }
 
     /**
